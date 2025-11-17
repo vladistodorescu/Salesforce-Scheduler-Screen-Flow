@@ -1,0 +1,6 @@
+REQUIREMENTS 
+
+We need to create a Custom Screen Flow which allows the user to schedule an appointment in avaialble time slots.
+For this, the user needs to select a service type (Service__c), an available resource (Resource__c), and an according free time slot.
+After that a record describing the appointment (Appointment__c) will be stored in the org.
+
