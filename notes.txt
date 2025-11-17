@@ -4,3 +4,21 @@ We need to create a Custom Screen Flow which allows the user to schedule an appo
 For this, the user needs to select a service type (Service__c), an available resource (Resource__c), and an according free time slot.
 After that a record describing the appointment (Appointment__c) will be stored in the org.
 
+There should be an APEX class that returns 
+
+DATA MODEL
+  Service__c
+    - Name
+    - Duration__c (Number, minute)
+  
+  Resource__c
+    - Name
+    - Working_Hours_Start__c (DateTime)
+    - Working_Hours_End__c (DateTime)
+
+  Appointment__c
+    - Name
+    - Service__c (Lookup)
+    - Resource__c (Lookup)
+    - Start_Time__c (DateTime)
+    - End_Time__c (DateTime)
