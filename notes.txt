@@ -4,8 +4,6 @@ We need to create a Custom Screen Flow which allows the user to schedule an appo
 For this, the user needs to select a service type (Service__c), an available resource (Resource__c), and an according free time slot.
 After that a record describing the appointment (Appointment__c) will be stored in the org.
 
-There should be an APEX class that returns 
-
 DATA MODEL
   Service__c
     - Name
@@ -22,3 +20,20 @@ DATA MODEL
     - Resource__c (Lookup)
     - Start_Time__c (DateTime)
     - End_Time__c (DateTime)
+
+We create a Flow "Appointment Scheduler", which starts with an Intro Screen.
+In this Intro Screen we can start the flow.
+
+If we proceed with to start scheduling, we will pe prompted to input the required data: the Service__c record, the Resource__c record and a Date.
+From here we can try checking availability, or we can exit the flow.
+
+If we choose to check availability, the 3 parameters are sent to the APEX Action.
+This Action will then take the recieved parameters, extract all Appointments for the requested Resource on the selected Date.
+It will then find out all free intervals (intervals in the working schedule of the resource, subtracting the "busy" intervals).
+Lastly, we split the free intervals into intervals of given size (Service__c.Duration_c) and return them to the flow.
+
+The data is returned to the flow in an APEX-defined collection variable, which allows us to create a Collection Choice Set for user choice.
+Before we show the results to the user, we check if the returned collection is empty, or not, if yes, we show a screen explaining to the user that there is not an available requested Service with the requested Resource on the requested Date, and allow the user to either end the flow, or return to input prompting.
+
+If it's not empty, we show the Choice Set to the user, and allow him to choose one of the available intervals.
+In the end, the new Appointment__c record is created, with the selected start and end time, and related to the inputted Service__c and Resource__c records.
